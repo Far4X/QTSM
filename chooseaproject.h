@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <string>
+#include "mainwindow.h"
 
 namespace Ui {
 class ChooseAProject;
@@ -18,11 +19,12 @@ public:
     void addElemInList(std::string elem);
 
 public slots:
-
     void projectSelected();
+    void close();
 
 private:
     Ui::ChooseAProject *ui;
+    MainWindow *m_new_win;
 };
 
 #endif // CHOOSEAPROJECT_H

@@ -1,11 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <string>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(std::string path_of_the_project, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    m_path_of_the_project = path_of_the_project;
 }
 
 MainWindow::~MainWindow()
