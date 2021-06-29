@@ -13,15 +13,15 @@ std::map<std::string, std::string> recoveryFic();
 
 int main(int argc, char *argv[]){
     QApplication a(argc, argv);
-    ChooseAProject Tw;
+    ChooseAProject FirstWindow;
 
     std::map<std::string, std::string> holder(getDictFic()), *dict_projects=&holder;
 
     for(auto &item : *dict_projects){
-        Tw.addElemInList(item.first);
+        FirstWindow.addElemInList(item.first);
     }
 
-    Tw.show();
+    FirstWindow.show();
 
     return a.exec();
 }

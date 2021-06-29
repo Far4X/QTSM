@@ -3,6 +3,9 @@
 #include <string>
 #include <iostream>
 
+
+//The following function returns the directory of the current user (Works on linux, idk for Windows)
+
 const char *getHomeDir(){
     const char *home_dir;
 
@@ -13,13 +16,22 @@ const char *getHomeDir(){
     return home_dir;
 }
 
+
+//The following function just returns the message at the start of the file "list.pts" (pts stands for paths)
+
 const std::string getDisclaimerMessage(){
     return "#List of QTSM projects. This is just the list of all the projects. DO NOT TOUCH (Except if you are Far4X).";
 }
 
+
+//The following function returns the path of the file where is the list of all the projects and their paths
+
 const std::string getListPath(){
     return std::string(std::string(getHomeDir()) + "/Documents/.QTSM/list.pts");
 }
+
+
+//The following function returns a map with the name of the project as the first item and the path as the second
 
 std::map<std::string, std::string> getDictFic(){
     std::map<std::string, std::string> dict;
@@ -75,3 +87,19 @@ std::map<std::string, std::string> getDictFic(){
 }
 
 
+//The next function rewrite the folder with a new/modified dict
+
+void rewriteFile(const std::map<std::string, std::string> &dict){
+    std::ofstream fileFlux(getListPath());
+
+    fileFlux << getDisclaimerMessage() << '\n' << std::endl;
+
+    for(auto &item : dict){
+        std::string path(item.second);
+        fileFlux << "PROJECT:" << item.first << "|" << path.erase(path.size()-1) << '\n';
+        std::flush(fileFlux);
+    }
+
+    fileFlux << '\n' <<"Writing completed" << std::endl;
+
+}

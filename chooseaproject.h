@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <string>
+#include <map>
 #include "mainwindow.h"
 
 namespace Ui {
@@ -20,11 +21,13 @@ public:
 
 public slots:
     void projectSelected();
+    void deleteThisProject();
     void close();
 
 private:
     Ui::ChooseAProject *ui;
-    MainWindow *m_new_win;
+    MainWindow *m_project_win = nullptr;
+    std::map <std::string, std::string> m_dict_projects;
 };
 
 #endif // CHOOSEAPROJECT_H
