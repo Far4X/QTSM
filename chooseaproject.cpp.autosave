@@ -34,11 +34,6 @@ ChooseAProject::~ChooseAProject()
 }
 
 
-std::map <std::string, std::string>* ChooseAProject::getDict(){
-    return &m_dict_projects;
-}
-
-
 void ChooseAProject::addElemInList(std::string elem){
    ui->comboBoxChooseAProject->addItem(QString::fromStdString(elem));
 }

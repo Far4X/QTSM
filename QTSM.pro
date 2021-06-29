@@ -28,16 +28,19 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     chooseaproject.cpp \
-    commonfunctions.cpp
+    commonfunctions.cpp \
+    SubClasses/modifyoptionsproject.cpp
 
 HEADERS += \
         mainwindow.h \
     chooseaproject.h \
-    commonfunctions.h
+    commonfunctions.h \
+    SubClasses/modifyoptionsproject.h
 
 FORMS += \
         mainwindow.ui \
-    chooseaproject.ui
+    chooseaproject.ui \
+    SubClasses/modifyoptionsproject.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
