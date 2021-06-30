@@ -34,13 +34,21 @@ ChooseAProject::~ChooseAProject()
 }
 
 
-std::map <std::string, std::string>* ChooseAProject::getDict(){
-    return &m_dict_projects;
+void ChooseAProject::addElemInList(std::string elem){
+   ui->comboBoxChooseAProject->addItem(QString::fromStdString(elem));
 }
 
 
-void ChooseAProject::addElemInList(std::string elem){
-   ui->comboBoxChooseAProject->addItem(QString::fromStdString(elem));
+void ChooseAProject::refreshList(){
+    ui->comboBoxChooseAProject->clear();
+    for(auto &item : m_dict_projects){
+        addElemInList(item.first);
+    }
+}
+
+
+void ChooseAProject::setCurrentElemInList(QString elem){
+    ui->comboBoxChooseAProject->setCurrentText(elem);
 }
 
 
@@ -70,7 +78,7 @@ void ChooseAProject::projectSelected(){
 void ChooseAProject::modifyThisProject(){
     std::string project_chosen(ui->comboBoxChooseAProject->currentText().toStdString());
     std::string path_file_project = m_dict_projects[project_chosen];
-    m_modify_project_win = new ModifyOptionsProject(project_chosen, path_file_project);
+    m_modify_project_win = new ModifyOptionsProject(project_chosen, m_dict_projects, this);
     m_modify_project_win->show();
 }
 

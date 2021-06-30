@@ -19,7 +19,8 @@ public:
     explicit ChooseAProject(QWidget *parent = nullptr);
     ~ChooseAProject();
     void addElemInList(std::string elem);
-    std::map <std::string, std::string>* getDict();
+    void refreshList();
+    void setCurrentElemInList(QString elem);
 
 public slots:
     void projectSelected();

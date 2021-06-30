@@ -14,11 +14,17 @@ class ModifyOptionsProject : public QWidget
     Q_OBJECT
 
 public:
-    explicit ModifyOptionsProject(std::string project_name, std::map<std::string, std::string> &projects_dict, QWidget *parent = nullptr);
+    explicit ModifyOptionsProject(std::string project_name, std::map<std::string, std::string> &projects_dict, class ChooseAProject *widget_of_the_project, QWidget *parent = nullptr);
     ~ModifyOptionsProject();
+
+public slots:
+    void resetLineEdit();
+    void changeProjectName();
+    void changeFileName();
 
 private:
     Ui::ModifyOptionsProject *ui;
+    class ChooseAProject *m_widget_of_the_project;
     std::string m_project_name;
     std::map<std::string, std::string> *m_projects_dict;
 };

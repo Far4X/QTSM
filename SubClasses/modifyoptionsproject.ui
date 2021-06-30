@@ -6,17 +6,11 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>560</width>
+    <width>618</width>
     <height>190</height>
    </rect>
   </property>
   <property name="minimumSize">
-   <size>
-    <width>560</width>
-    <height>190</height>
-   </size>
-  </property>
-  <property name="maximumSize">
    <size>
     <width>560</width>
     <height>190</height>
@@ -43,7 +37,7 @@
     <rect>
      <x>10</x>
      <y>20</y>
-     <width>541</width>
+     <width>601</width>
      <height>21</height>
     </rect>
    </property>
@@ -63,7 +57,7 @@
    <property name="title">
     <string>Project name</string>
    </property>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="lineEditChangeProjectName">
     <property name="geometry">
      <rect>
       <x>12</x>
@@ -73,7 +67,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QDialogButtonBox" name="buttonBox">
+   <widget class="QDialogButtonBox" name="buttonBoxChangeName">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -105,21 +99,27 @@
     <rect>
      <x>239</x>
      <y>40</y>
-     <width>311</width>
+     <width>371</width>
      <height>141</height>
     </rect>
    </property>
    <property name="title">
     <string>Project folder/file</string>
    </property>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="labelShowPath">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>36</y>
-      <width>291</width>
-      <height>41</height>
+      <y>26</y>
+      <width>351</width>
+      <height>71</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="text">
      <string>TextLabel</string>
@@ -129,8 +129,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>90</y>
-      <width>91</width>
+      <y>100</y>
+      <width>111</width>
       <height>34</height>
      </rect>
     </property>
@@ -141,9 +141,9 @@
    <widget class="QPushButton" name="buttonChangeFolder">
     <property name="geometry">
      <rect>
-      <x>105</x>
-      <y>90</y>
-      <width>101</width>
+      <x>130</x>
+      <y>100</y>
+      <width>111</width>
       <height>34</height>
      </rect>
     </property>
@@ -154,9 +154,9 @@
    <widget class="QPushButton" name="buttonChangeFile">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>90</y>
-      <width>88</width>
+      <x>250</x>
+      <y>100</y>
+      <width>111</width>
       <height>34</height>
      </rect>
     </property>
