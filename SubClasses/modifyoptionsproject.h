@@ -16,6 +16,7 @@ class ModifyOptionsProject : public QWidget
 public:
     explicit ModifyOptionsProject(std::string project_name, std::map<std::string, std::string> &projects_dict, class ChooseAProject *widget_of_the_project, QWidget *parent = nullptr);
     ~ModifyOptionsProject();
+    void updatePathLabel();
 
 public slots:
     void resetLineEdit();

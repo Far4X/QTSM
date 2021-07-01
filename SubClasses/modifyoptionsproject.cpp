@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QInputDialog>
 #include <map>
+#include <vector>
 #include <string>
 #include <iostream>
 
@@ -23,7 +24,7 @@ ModifyOptionsProject::ModifyOptionsProject(std::string project_name, std::map<st
 
     ui->labelShowPath->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     ui->labelShowPath->setWordWrap(true);
-    ui->labelShowPath->setText(QString::fromStdString("Current path of the project : \n" + m_projects_dict->operator[](m_project_name)));
+    updatePathLabel();
 
     QObject::connect(ui->buttonBoxChangeName, SIGNAL(rejected()), this, SLOT(resetLineEdit()));
     QObject::connect(ui->buttonBoxChangeName, SIGNAL(accepted()), this, SLOT(changeProjectName()));
@@ -32,6 +33,10 @@ ModifyOptionsProject::ModifyOptionsProject(std::string project_name, std::map<st
 
 ModifyOptionsProject::~ModifyOptionsProject(){
     delete ui;
+}
+
+void ModifyOptionsProject::updatePathLabel(){
+    ui->labelShowPath->setText(QString::fromStdString("Current path of the project : \n" + m_projects_dict->operator[](m_project_name)));
 }
 
 void ModifyOptionsProject::resetLineEdit(){
@@ -49,9 +54,33 @@ void ModifyOptionsProject::changeProjectName(){
 }
 
 void ModifyOptionsProject::changeFileName(){
-    std::cout << "OK3" << std::endl;
     QString new_file_name_qstring = QInputDialog::getText(this, tr("Choose a new name for the file"), tr("Files name:"));
     std::string new_file_name = new_file_name_qstring.toStdString();
-    std::string old_path = (*m_projects_dict)[m_project_name];
-    //Scinder le path en plusieurs parties, mettre dans vect, file name -> dernier elem de la liste, new path = reste + new_name
+    std::string old_path = (*m_projects_dict)[m_project_name],new_path;
+    while (old_path[old_path.size()-1] != 'm'){
+        old_path.pop_back();
+    }
+    std::vector<std::string> list_folder;
+    list_folder.push_back("");
+    unsigned long place_f(0);
+    for (unsigned int i(0); i < old_path.size(); i++){
+        if (old_path[i] != '\n' || old_path[i] != '\r'){
+            if (old_path[i] == '/'){
+                if (i != 0){
+                    place_f ++;
+                    list_folder.push_back("");
+                }
+            }
+            list_folder[place_f].push_back(old_path[i]);
+        }
+    }
+    for (unsigned int i(0); i < list_folder.size()-1; i++){
+        new_path += list_folder[i];
+    }
+    new_path += ("/" + new_file_name + ".qtsm");
+    (*m_projects_dict)[m_project_name] = new_path;
+    std::string cmd("mv " + old_path + " " + new_path);
+    system(cmd.c_str());
+    rewriteFile(*m_projects_dict);
+    updatePathLabel();
 }
