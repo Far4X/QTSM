@@ -22,6 +22,8 @@ public slots:
     void resetLineEdit();
     void changeProjectName();
     void changeFileName();
+    void changeProjectFolder();
+    void changeProjectFile();
 
 private:
     Ui::ModifyOptionsProject *ui;

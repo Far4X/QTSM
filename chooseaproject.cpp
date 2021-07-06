@@ -14,7 +14,7 @@ ChooseAProject::ChooseAProject(QWidget *parent) :
     ui(new Ui::ChooseAProject)
 {
     ui->setupUi(this);
-    this->setWindowTitle(QString("QTSM - (Choose a project)"));
+    this->setWindowTitle(QString("QTSM - Choose a project"));
     QObject::connect((ui->pushButtonValidCurrentProject), SIGNAL(clicked()), this, SLOT(projectSelected()));
     QObject::connect((ui->pushButtonDeleteCurrentProject), SIGNAL(clicked()), this, SLOT(deleteThisProject()));
     QObject::connect((ui->pushButtonOption), SIGNAL(clicked()), this, SLOT(modifyThisProject()));
@@ -29,6 +29,7 @@ ChooseAProject::~ChooseAProject()
         delete m_project_win;
     }
     if (m_modify_project_win != nullptr){
+        m_modify_project_win ->close();
         delete m_modify_project_win;
     }
 }

@@ -50,7 +50,6 @@ std::map<std::string, std::string> getDictFic(){
 
                     if(line_fic[cnt] == '|'){
                         is_the_path = true;
-                        std::cout << name_project << "OK" << std::endl;
                     }
 
                     else {
@@ -96,8 +95,18 @@ void rewriteFile(const std::map<std::string, std::string> &dict){
 
     for(auto &item : dict){
         std::string path(item.second);
-        fileFlux << "PROJECT:" << item.first << "|" << path.erase(path.size()-1) << '\n';
-        std::flush(fileFlux);
+        if (path != ""){
+            if (path[path.size()-1] != 'm'){
+                fileFlux << "PROJECT:" << item.first << "|" << path.erase(path.size()-1) << '\n';
+            }
+            else{
+                fileFlux << "PROJECT:" << item.first << "|" << path << '\n';
+            }
+            std::flush(fileFlux);
+        }
+        else {
+            throw "Impossible to found the path of the " + item.first + " project";
+        }
     }
 
     fileFlux << '\n' <<"Writing completed" << std::endl;
