@@ -26,6 +26,7 @@ public slots:
     void projectSelected();
     void deleteThisProject();
     void modifyThisProject();
+    void createNewProject();
     void close();
 
 private:

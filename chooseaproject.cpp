@@ -3,6 +3,8 @@
 #include "mainwindow.h"
 #include "commonfunctions.h"
 #include <QString>
+#include <QInputDialog>
+#include <QFileDialog>
 #include <string>
 #include <iostream>
 #include <map>
@@ -15,9 +17,10 @@ ChooseAProject::ChooseAProject(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle(QString("QTSM - Choose a project"));
-    QObject::connect((ui->pushButtonValidCurrentProject), SIGNAL(clicked()), this, SLOT(projectSelected()));
-    QObject::connect((ui->pushButtonDeleteCurrentProject), SIGNAL(clicked()), this, SLOT(deleteThisProject()));
-    QObject::connect((ui->pushButtonOption), SIGNAL(clicked()), this, SLOT(modifyThisProject()));
+    QObject::connect(ui->pushButtonValidCurrentProject, SIGNAL(clicked()), this, SLOT(projectSelected()));
+    QObject::connect(ui->pushButtonDeleteCurrentProject, SIGNAL(clicked()), this, SLOT(deleteThisProject()));
+    QObject::connect(ui->pushButtonOption, SIGNAL(clicked()), this, SLOT(modifyThisProject()));
+    QObject::connect(ui->pushButtonNewProject, SIGNAL(clicked()), this, SLOT(createNewProject()));
     m_dict_projects = getDictFic();
 }
 
@@ -81,6 +84,18 @@ void ChooseAProject::modifyThisProject(){
     std::string path_file_project = m_dict_projects[project_chosen];
     m_modify_project_win = new ModifyOptionsProject(project_chosen, m_dict_projects, this);
     m_modify_project_win->show();
+}
+
+
+void ChooseAProject::createNewProject(){
+    std::string project_name = QInputDialog::getText(this, tr("Choose a name for your project"), tr("Name for your project : ")).toStdString();
+    std::string project_path = QFileDialog::getSaveFileName(this, "Choose a file for your project", getHomeDir(), "qtsm files (*.qtsm)").toStdString();
+    if (project_name != "" && project_path != ""){
+        system(("touch " + project_path).c_str());
+        m_dict_projects[project_name] = project_path;
+        ui->comboBoxChooseAProject->addItem(QString::fromStdString(project_name));
+        rewriteFile(m_dict_projects);
+    }
 }
 
 

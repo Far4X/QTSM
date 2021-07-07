@@ -8,6 +8,7 @@ MainWindow::MainWindow(std::string path_of_the_project, QWidget *parent) :
 {
     ui->setupUi(this);
     m_path_of_the_project = path_of_the_project;
+    ui->centralWidget->setLayout(ui->mainLayout);
 }
 
 MainWindow::~MainWindow()
