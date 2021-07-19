@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <string>
 #include <vector>
-#include "SubClasses/axiswidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,7 +20,6 @@ public:
 private:
     Ui::MainWindow *ui;
     std::string m_path_of_the_project;
-    std::vector<AxisWidget*> m_list_axes;
 };
 
 #endif // MAINWINDOW_H
