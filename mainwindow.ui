@@ -25,12 +25,16 @@
     </property>
     <layout class="QHBoxLayout" name="mainLayout">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="layoutAxisSide">
        <item>
-        <widget class="QTreeView" name="treeView"/>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>GroupBox</string>
+         </property>
+        </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QHBoxLayout" name="layoutButtons">
          <item>
           <widget class="QPushButton" name="viewTasks">
            <property name="text">
@@ -64,7 +68,7 @@
       </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="layoutInformations">
        <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
@@ -82,14 +86,14 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="labelInformationd">
          <property name="text">
           <string>TextLabel</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="pushButtonMoreInformations">
          <property name="text">
           <string>PushButton</string>
          </property>
