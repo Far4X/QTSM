@@ -110,5 +110,13 @@ void rewriteFile(const std::map<std::string, std::string> &dict){
     }
 
     fileFlux << '\n' <<"Writing completed" << std::endl;
+}
 
+
+void replaceWord(std::string &original, const std::string &to_find, const std::string &to_replace){
+    unsigned int i = unsigned(int(original.find(to_find)));
+    while (i != unsigned(int(std::string::npos))){
+        original.replace(i, to_find.size(), to_replace);
+        i = unsigned(int(original.find(to_find)));
+    }
 }

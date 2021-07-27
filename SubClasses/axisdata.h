@@ -8,6 +8,7 @@ class AxisData
 {
 public:
     AxisData(std::ifstream &input_flux, int position);
+    AxisData(std::string);
     AxisData();
     virtual ~AxisData();
 

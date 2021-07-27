@@ -10,7 +10,7 @@ RootAxisData::RootAxisData(std::string& path){
         AxisData(input_flux, int(input_flux.tellg()));
     }
     else {
-        throw "Impossible to open " + path;
+        throw ("Impossible to open " + path);
     }
 }
 
