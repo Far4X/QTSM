@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 
+
 namespace Ui {
 class ModifyOptionsProject;
 }
@@ -30,6 +31,7 @@ private:
     class ChooseAProject *m_widget_of_the_project;
     std::string m_project_name;
     std::map<std::string, std::string> *m_projects_dict;
+
 };
 
 #endif // MODIFYOPTIONSPROJECT_H

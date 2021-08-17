@@ -11,6 +11,7 @@ public:
     void saveTree(std::string &path);
     virtual AxisData *getParent();
     virtual std::string getPathAxes();
+    virtual std::string getTree();
 };
 
 #endif // ROOTAXISDATA_H

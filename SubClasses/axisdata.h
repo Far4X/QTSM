@@ -7,15 +7,16 @@
 class AxisData
 {
 public:
-    AxisData(std::ifstream &input_flux, int position);
-    AxisData(std::string);
+    AxisData(std::string &def_of_this, AxisData *master = nullptr);
     AxisData();
     virtual ~AxisData();
 
     bool percentDone();
-    void appendChild(AxisData new_child);
+    void appendChild(AxisData* new_child);
     void deleteChild();
+    std::vector<AxisData*>* getChilds();
 
+    virtual std::string getTree();
     virtual AxisData *getParent();
     virtual std::string getPathAxes();
 
@@ -24,7 +25,7 @@ public:
 private:
     bool m_is_done;
     AxisData* m_parent;
-    std::vector<AxisData> childs;
+    std::vector<AxisData*> m_childs;
     std::string m_name;
     std::string m_desc;
 };
