@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 
-AxisData::AxisData(std::string &def_of_this, AxisData *master){
+AxisData::AxisData(std::string def_of_this, AxisData *master){
 
     if (master == nullptr)
         std::cout << "Def of this : " <<  def_of_this << std::endl;
@@ -20,8 +20,11 @@ AxisData::AxisData(std::string &def_of_this, AxisData *master){
         if (equal_passed){
             if (current_char == ',' && can_be_ended && nb_of_braces == 0){
                 equal_passed = false;
-                if (current_param == "name")
+                if (current_param == "name"){
+                    std::cout << "Name of : " << m_name << " is now : " << value_of_current_param << std::endl;
                     m_name = value_of_current_param;
+                }
+
 
                 else if (current_param == "is_done")
                     value_of_current_param == "true" ? m_is_done = true : m_is_done = false;
@@ -38,7 +41,6 @@ AxisData::AxisData(std::string &def_of_this, AxisData *master){
 
                 else {
                     std::cout << "Unknow parm : '" << current_param << "', value : " << value_of_current_param << std::endl;
-                    std::cout << "Desc (at this step) : \n" << def_of_this << std::endl;
                 }
 
                 current_param = "";
@@ -118,8 +120,7 @@ AxisData::AxisData(std::string &def_of_this, AxisData *master){
 
         }
     }
-    std::cout << "Axis created. Params : \n\tName : \n\t\t" << m_name << "\n\tDesc : \n\t\t" << m_desc << "\n\tIs done : \n\t\t" << m_is_done << std::endl;
-    if (master != nullptr)
+    if (master == this)
         master->appendChild(this);
 }
 
@@ -154,8 +155,12 @@ std::vector<AxisData*>* AxisData::getChilds(){
 std::string AxisData::getTree(){
     std::string branch_of_this{"\t" + m_name};
     for(unsigned int i{0}; i < (m_childs.size()); i++){
+        branch_of_this += "\n\t";
         branch_of_this += m_childs[i]->getTree();
-        branch_of_this += "\n";
     }
     return  branch_of_this;
+}
+
+std::string AxisData::getType(){
+    return "AxisData";
 }

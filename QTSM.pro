@@ -29,13 +29,17 @@ SOURCES += \
         mainwindow.cpp \
     chooseaproject.cpp \
     commonfunctions.cpp \
-    SubClasses/modifyoptionsproject.cpp
+    SubClasses/modifyoptionsproject.cpp \
+    SubClasses/axisdata.cpp \
+    SubClasses/rootaxisdata.cpp
 
 HEADERS += \
         mainwindow.h \
     chooseaproject.h \
     commonfunctions.h \
-    SubClasses/modifyoptionsproject.h
+    SubClasses/modifyoptionsproject.h \
+    SubClasses/axisdata.h \
+    SubClasses/rootaxisdata.h
 
 FORMS += \
         mainwindow.ui \

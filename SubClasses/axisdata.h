@@ -7,7 +7,7 @@
 class AxisData
 {
 public:
-    AxisData(std::string &def_of_this, AxisData *master = nullptr);
+    AxisData(std::string def_of_this, AxisData *master = nullptr);
     AxisData();
     virtual ~AxisData();
 
@@ -19,10 +19,11 @@ public:
     virtual std::string getTree();
     virtual AxisData *getParent();
     virtual std::string getPathAxes();
+    virtual std::string getType();
 
     std::string getName();
 
-private:
+protected :
     bool m_is_done;
     AxisData* m_parent;
     std::vector<AxisData*> m_childs;

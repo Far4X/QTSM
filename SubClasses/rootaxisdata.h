@@ -12,6 +12,8 @@ public:
     virtual AxisData *getParent();
     virtual std::string getPathAxes();
     virtual std::string getTree();
+    virtual std::string getType();
+
 };
 
 #endif // ROOTAXISDATA_H

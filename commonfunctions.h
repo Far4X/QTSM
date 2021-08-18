@@ -7,6 +7,7 @@
 const char *getHomeDir();
 const std::string getListPath();
 const std::string getDisclaimerMessage();
+std::string transformPathToRootAxisDesc(std::string& path);
 std::map<std::string, std::string> getDictFic();
 void rewriteFile(const std::map<std::string, std::string> &dict);
 void changeProjectNameAndRefresh(std::string old_project_name, std::string new_project_name);

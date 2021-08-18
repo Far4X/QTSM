@@ -33,7 +33,7 @@
      <item>
       <widget class="QLabel" name="labelShowPathAxis">
        <property name="text">
-        <string>Current parh of axes : &lt;path&gt;</string>
+        <string>Current path of axes : &lt;path&gt;</string>
        </property>
       </widget>
      </item>
@@ -45,7 +45,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="labelHeaderDescription">
        <property name="text">
         <string>Description of the &lt;CurrentAxis&gt; :</string>
        </property>
@@ -85,7 +85,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="labelDNTPercentOfSubAxesDone">
        <property name="text">
         <string>Percent of sub-axes done :</string>
        </property>

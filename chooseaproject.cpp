@@ -74,7 +74,8 @@ void ChooseAProject::deleteThisProject(){
 void ChooseAProject::projectSelected(){
     std::string project_chosen(ui->comboBoxChooseAProject->currentText().toStdString());
     this->hide();
-    m_project_win = new MainWindow(project_chosen, this);
+    std::string path_of_the_project = m_dict_projects[project_chosen];
+    m_project_win = new MainWindow(path_of_the_project, this);
     m_project_win->show();
 }
 

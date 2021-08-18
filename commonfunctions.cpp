@@ -30,6 +30,30 @@ const std::string getListPath(){
     return std::string(std::string(getHomeDir()) + "/Documents/.QTSM/list.pts");
 }
 
+std::string transformPathToRootAxisDesc(std::string& path){
+    std::cout << "Path received : " << path << std::endl;
+    std::ifstream input_flux(path);
+    if (input_flux){
+        char current_char;
+        input_flux >> current_char;
+        std::string def_of_root_axis;
+        int nb_of_braces = 0;
+        while (((current_char != '}' && current_char != ';') || nb_of_braces != 0) && current_char != EOF){
+            if (current_char == '{')
+                nb_of_braces++;
+            else if (current_char == '}')
+                nb_of_braces--;
+
+            def_of_root_axis += current_char;
+            input_flux >> current_char;
+
+        }
+        return def_of_root_axis;
+    }
+   else {
+        throw ("Impossible to open " + path);
+   }
+}
 
 //The following function returns a map with the name of the project as the first item and the path as the second
 
