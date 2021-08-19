@@ -12,9 +12,11 @@ public:
     virtual ~AxisData();
 
     bool percentDone();
+    void rename(std::string new_name);
     void appendChild(AxisData* new_child);
     void deleteChild();
     std::vector<AxisData*>* getChilds();
+    std::string getDefinition();
 
     virtual std::string getTree();
     virtual AxisData *getParent();

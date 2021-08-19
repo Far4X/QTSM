@@ -33,3 +33,15 @@ std::string RootAxisData::getTree(){
 std::string RootAxisData::getType(){
     return "RootAxisData";
 }
+
+void RootAxisData::saveTree(std::string &path){
+    std::ofstream file{path};
+    if (file){
+        file << this->getDefinition() << "\n";
+        file.flush();
+        file << "WRITING COMPLETE";
+        file.flush();
+    }
+    else
+        throw "Impossible to open " + path;
+}

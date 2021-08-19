@@ -4,12 +4,6 @@
 #include <fstream>
 
 AxisData::AxisData(std::string def_of_this, AxisData *master){
-
-    if (master == nullptr)
-        std::cout << "Def of this : " <<  def_of_this << std::endl;
-    else
-        std::cout << "Def of this : " <<  def_of_this << " Master : " << master->getName() << std::endl;
-
     char current_char;
     int nb_of_braces = 0;
 
@@ -18,23 +12,25 @@ AxisData::AxisData(std::string def_of_this, AxisData *master){
     for (unsigned int i = 0; i < unsigned(int(def_of_this.size())); i++){
         current_char = def_of_this[i];
         if (equal_passed){
-            if (current_char == ',' && can_be_ended && nb_of_braces == 0){
+            if ((current_char == ',') && can_be_ended && nb_of_braces == 0){
                 equal_passed = false;
                 if (current_param == "name"){
-                    std::cout << "Name of : " << m_name << " is now : " << value_of_current_param << std::endl;
                     m_name = value_of_current_param;
                 }
 
-
-                else if (current_param == "is_done")
+                else if (current_param == "is_done"){
                     value_of_current_param == "true" ? m_is_done = true : m_is_done = false;
+                    std::cout << m_name << " : matched param  : " << current_param << "; value : " << value_of_current_param << std::endl;
+
+                }
 
                 else if (current_param == "desc"){
                     replaceWord(value_of_current_param, "_", " ");
                     m_desc = value_of_current_param;
+                    std::cout << m_name << " : matched param  : " << current_param << "; value : " << value_of_current_param << std::endl;
                 }
                 else if (current_param == "type"){
-                    if (value_of_current_param != "RootAxis"){
+                    if (value_of_current_param != "RootAxisData"){
                         throw "Type diffrent of RootAxis";
                     }
                 }
@@ -73,7 +69,7 @@ AxisData::AxisData(std::string def_of_this, AxisData *master){
                                     else {
                                         type_passed = false;
                                         std::cout << "New child : " << desc_of_current_child << "\nType : " << type_of_child <<std::endl;
-                                        if (type_of_child == "BasicAxis"){
+                                        if (type_of_child == "AxisData"){
                                             m_childs.push_back(new AxisData(desc_of_current_child, this));
                                         }
                                         desc_of_current_child = "";
@@ -132,6 +128,10 @@ AxisData::~AxisData(){
 
 }
 
+void AxisData::rename(std::string new_name){
+    m_name = new_name;
+}
+
 void AxisData::appendChild(AxisData *new_child){
     m_childs.push_back(new_child);
 }
@@ -159,6 +159,18 @@ std::string AxisData::getTree(){
         branch_of_this += m_childs[i]->getTree();
     }
     return  branch_of_this;
+}
+
+std::string AxisData::getDefinition(){
+    replaceWord(m_desc, " ", "_");
+    std::string definition{"type = \"" + this->getType() + "\", name = \"" + m_name + "\", desc = \"" + m_desc + "\", is_done = \"" + (m_is_done ? "true" : "false") + "\""};
+    definition += ", childs = {";
+    for (unsigned int i{0}; i < m_childs.size(); i++){
+          definition += m_childs[i]->getDefinition();
+    }
+    definition += "};";
+    replaceWord(m_desc, "_", " ");
+    return definition;
 }
 
 std::string AxisData::getType(){
