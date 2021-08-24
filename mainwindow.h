@@ -18,12 +18,22 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(std::string path_of_the_project, QWidget *parent = nullptr);
     ~MainWindow();
+    void updateView();
+
+public slots :
+    void changeAxisWithButton();
+    void changeAxisToMaster();
+    void checkBoxClicked(bool state);
+    void createNewChild();
 
 private:
     Ui::MainWindow *ui;
+    std::vector<QWidget*> m_widgets_when_no_child;
+    std::vector<QWidget*> m_widgets_when_child;
     std::string m_path_of_the_project;
     std::string m_current_path_in_axes;
     RootAxisData *m_root_axis;
+    AxisData *m_current_axis;
 };
 
 #endif // MAINWINDOW_H

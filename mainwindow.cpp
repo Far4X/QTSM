@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "SubClasses/rootaxisdata.h"
 #include <string>
+#include <QInputDialog>
 #include <iostream>
 
 //ToDo : If the Axis doesn't have child, modify the gui (replace 'percent of sub axes' done by 'is the axis done ?', with a checkbutton istead of the %bar(And modify the spacer))
@@ -14,6 +15,7 @@ MainWindow::MainWindow(std::string path_of_the_project, QWidget *parent) :
     m_path_of_the_project = path_of_the_project;
 
     m_root_axis = new RootAxisData(m_path_of_the_project);
+    m_current_axis = m_root_axis;
     m_current_path_in_axes = m_root_axis->getPathAxes();
     std::cout << m_root_axis->getTree() << std::endl;
 
@@ -25,13 +27,88 @@ MainWindow::MainWindow(std::string path_of_the_project, QWidget *parent) :
     m_root_axis->saveTree(m_path_of_the_project);
 
     ui->centralWidget->setLayout(ui->mainLayout);
-    ui->labelDescriptionOfTheAxis->setText(QString("This is a very very very long text without any goal, except maybe the fact that it show if I am a good dev, or more precisely, in this case, a good designer, because this text can show me if i done well the display of the description, which is, of course, filled with this text"));
-    ui->labelDescriptionOfTheAxis->setWordWrap(true);
 
-    ui->labelHeaderDescription->setText(QString::fromStdString("Description of the current axis : " + m_root_axis->getName()));
+    ui->labelDescriptionOfTheAxis->setWordWrap(true);
+    ui->progressBar->setRange(0, 100);
+
+    ui->labelHeaderDescription->setText(QString::fromStdString("Description of the current axis : "));
+
+    m_widgets_when_child.push_back(ui->comboBox);
+    m_widgets_when_child.push_back(ui->progressBar);
+    m_widgets_when_child.push_back(ui->pushButtonChangeToChild);
+    m_widgets_when_no_child.push_back(ui->checkBoxIsDone);
+    m_widgets_when_no_child.push_back(ui->labelDNTListChild);
+
+    this->updateView();
+
+    QObject::connect(ui->pushButtonChangeToChild, SIGNAL(clicked()), this, SLOT(changeAxisWithButton()));
+    QObject::connect(ui->pushButtonReturnToMaster, SIGNAL(clicked()), this, SLOT(changeAxisToMaster()));
+    QObject::connect(ui->pushButtonAddNewAxis, SIGNAL(clicked()), this, SLOT(createNewChild()));
+    QObject::connect(ui->checkBoxIsDone, SIGNAL(clicked(bool)), this, SLOT(checkBoxClicked(bool)));
 }
 
 MainWindow::~MainWindow()
 {
+    m_root_axis->saveTree(m_path_of_the_project);
     delete ui;
+}
+
+void MainWindow::updateView(){
+    ui->labelDescriptionOfTheAxis->setText(QString::fromStdString(m_current_axis->getDescription()));
+    ui->labelShowPathAxis->setText(QString::fromStdString("Current path of axes : " + m_current_axis->getPathAxes()));
+    if (m_current_axis->getChilds()->size() == 0){
+        for (unsigned int i{0}; i < m_widgets_when_child.size(); i++)
+            m_widgets_when_child[i]->hide();
+        for (unsigned int i{0}; i < m_widgets_when_no_child.size(); i++)
+            m_widgets_when_no_child[i]->show();
+        ui->labelPercentSubDoneOrIsDone->setText("Is done : ");
+        ui->labelDNTListChild->setText("");
+        ui->checkBoxIsDone->setChecked(m_current_axis->getIsDone());
+        this->resize(622, 250);
+    }
+    else{
+        for (unsigned int i{0}; i < m_widgets_when_child.size(); i++)
+            m_widgets_when_child[i]->show();
+        for (unsigned int i{0}; i < m_widgets_when_no_child.size(); i++)
+            m_widgets_when_no_child[i]->hide();
+        ui->labelPercentSubDoneOrIsDone->setText("Percent of sub-axes done :");
+        ui->labelDNTListChild->setText("List of sub Axes :");
+
+        ui->comboBox->clear();
+        for (auto &child : *m_current_axis->getChilds()){
+            ui->comboBox->addItem(QString::fromStdString(child->getName()));
+        }
+        this->resize(622, 318);
+        ui->progressBar->setValue(m_current_axis->getPercentDone());
+    }
+
+}
+
+void MainWindow::changeAxisWithButton(){
+    std::string name_new_axis{ui->comboBox->currentText().toStdString()};
+    AxisData* new_axis {m_current_axis->foundChild(name_new_axis)};
+    if (new_axis != nullptr){
+        m_current_axis = new_axis;
+        this->updateView();
+    }
+}
+
+void MainWindow::changeAxisToMaster(){
+    AxisData* new_axis {m_current_axis->getParent()};
+    if (new_axis != nullptr){
+        m_current_axis = new_axis;
+        this->updateView();
+    }
+}
+
+void MainWindow::checkBoxClicked(bool state){
+    m_current_axis->setIsDone(state);
+}
+
+void MainWindow::createNewChild(){
+    std::string name = QInputDialog::getText(this, tr("Choose a name for the new axis"), tr("Choose a name for the axis : ")).toStdString();
+    std::string desc = QInputDialog::getMultiLineText(this, tr("Choose a description for the new axis"), tr("Choose a descrption for the axis : ")).toStdString();
+    m_current_axis = new AxisData(name, desc, m_current_axis);
+    this->updateView();
+
 }

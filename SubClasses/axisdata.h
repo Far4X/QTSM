@@ -8,15 +8,20 @@ class AxisData
 {
 public:
     AxisData(std::string def_of_this, AxisData *master = nullptr);
+    AxisData(std::string name, std::string desc, AxisData *parent);
     AxisData();
     virtual ~AxisData();
 
-    bool percentDone();
+    int getPercentDone();
+    bool getIsDone();
+    void setIsDone(bool is_done);
     void rename(std::string new_name);
     void appendChild(AxisData* new_child);
     void deleteChild();
     std::vector<AxisData*>* getChilds();
     std::string getDefinition();
+    std::string getDescription();
+    AxisData *foundChild(std::string& name);
 
     virtual std::string getTree();
     virtual AxisData *getParent();

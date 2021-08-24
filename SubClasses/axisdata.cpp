@@ -6,6 +6,7 @@
 AxisData::AxisData(std::string def_of_this, AxisData *master){
     char current_char;
     int nb_of_braces = 0;
+    m_parent = master;
 
     std::string current_param, value_of_current_param;
     bool equal_passed = false, can_be_ended = true;
@@ -26,6 +27,7 @@ AxisData::AxisData(std::string def_of_this, AxisData *master){
 
                 else if (current_param == "desc"){
                     replaceWord(value_of_current_param, "_", " ");
+                    replaceWord(value_of_current_param, "/", "\n");
                     m_desc = value_of_current_param;
                     std::cout << m_name << " : matched param  : " << current_param << "; value : " << value_of_current_param << std::endl;
                 }
@@ -120,6 +122,16 @@ AxisData::AxisData(std::string def_of_this, AxisData *master){
         master->appendChild(this);
 }
 
+AxisData::AxisData(std::string name, std::string desc, AxisData *parent){
+    m_name = name;
+    m_desc = desc;
+    m_parent = parent;
+    m_is_done = false;
+    m_childs = {};
+    m_parent->appendChild(this);
+}
+
+
 AxisData::AxisData(){
     //Used to init the root
 }
@@ -141,7 +153,11 @@ AxisData *AxisData::getParent(){
 }
 
 std::string AxisData::getPathAxes(){
-    return getParent()->getPathAxes() + m_name;
+    return m_parent->getPathAxes() + "/" + m_name;
+}
+
+std::string AxisData::getDescription(){
+    return m_desc;
 }
 
 std::string AxisData::getName(){
@@ -150,6 +166,16 @@ std::string AxisData::getName(){
 
 std::vector<AxisData*>* AxisData::getChilds(){
     return &m_childs;
+}
+
+
+AxisData* AxisData::foundChild(std::string &name){
+    for(auto &child : m_childs){
+        if (child->getName() == name){
+            return child;
+        }
+    }
+    return nullptr;
 }
 
 std::string AxisData::getTree(){
@@ -163,6 +189,7 @@ std::string AxisData::getTree(){
 
 std::string AxisData::getDefinition(){
     replaceWord(m_desc, " ", "_");
+    replaceWord(m_desc, "\n", "/");
     std::string definition{"type = \"" + this->getType() + "\", name = \"" + m_name + "\", desc = \"" + m_desc + "\", is_done = \"" + (m_is_done ? "true" : "false") + "\""};
     definition += ", childs = {";
     for (unsigned int i{0}; i < m_childs.size(); i++){
@@ -170,9 +197,36 @@ std::string AxisData::getDefinition(){
     }
     definition += "};";
     replaceWord(m_desc, "_", " ");
+    replaceWord(m_desc, "/", "\n");
     return definition;
 }
 
 std::string AxisData::getType(){
     return "AxisData";
+}
+
+int AxisData::getPercentDone(){
+    int percent{0};
+    if (m_childs.size() == 0){
+        m_is_done ? percent = 100 : percent = 0;
+    }
+    else {
+        for (auto &child : m_childs){
+            percent += child->getPercentDone();
+        }
+        percent /= m_childs.size();
+    }
+    if (percent == 100)
+        m_is_done = true;
+    else
+        m_is_done = false;
+    return percent;
+}
+
+bool AxisData::getIsDone(){
+    return m_is_done;
+}
+
+void AxisData::setIsDone(bool is_done){
+    m_is_done = is_done;
 }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>622</width>
-    <height>302</height>
+    <height>318</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,16 +26,33 @@
       <x>0</x>
       <y>0</y>
       <width>621</width>
-      <height>281</height>
+      <height>294</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="mainLayout">
      <item>
-      <widget class="QLabel" name="labelShowPathAxis">
-       <property name="text">
-        <string>Current path of axes : &lt;path&gt;</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLabel" name="labelShowPathAxis">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Current path of axes : &lt;path&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonReturnToMaster">
+         <property name="text">
+          <string>Return to master</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="Line" name="line">
@@ -85,11 +102,28 @@
       </layout>
      </item>
      <item>
-      <widget class="QLabel" name="labelDNTPercentOfSubAxesDone">
-       <property name="text">
-        <string>Percent of sub-axes done :</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="labelPercentSubDoneOrIsDone">
+         <property name="text">
+          <string>Percent of sub-axes done :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBoxIsDone">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -145,21 +179,52 @@
      <item>
       <layout class="QHBoxLayout" name="layoutButtons">
        <item>
-        <widget class="QPushButton" name="viewTasks">
+        <widget class="QPushButton" name="pushButtonChangeToChild">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
-          <string>Show the content of this axis</string>
+          <string>Change to selected axis</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="addNewAxe">
+        <widget class="QPushButton" name="pushButtonShowContent">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Show content of this axis</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonAddNewAxis">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Add new axe</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="pushButtonDeleteAxis">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Delete this axe</string>
          </property>
