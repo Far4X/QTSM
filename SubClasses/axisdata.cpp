@@ -26,8 +26,8 @@ AxisData::AxisData(std::string def_of_this, AxisData *master){
                 }
 
                 else if (current_param == "desc"){
-                    replaceWord(value_of_current_param, "_", " ");
-                    replaceWord(value_of_current_param, "/", "\n");
+                    replaceWord(value_of_current_param, "\\e", " ");
+                    replaceWord(value_of_current_param, "\\n", "\n");
                     m_desc = value_of_current_param;
                     std::cout << m_name << " : matched param  : " << current_param << "; value : " << value_of_current_param << std::endl;
                 }
@@ -188,16 +188,16 @@ std::string AxisData::getTree(){
 }
 
 std::string AxisData::getDefinition(){
-    replaceWord(m_desc, " ", "_");
-    replaceWord(m_desc, "\n", "/");
+    replaceWord(m_desc, " ", "\\e");
+    replaceWord(m_desc, "\n", "\\n");
     std::string definition{"type = \"" + this->getType() + "\", name = \"" + m_name + "\", desc = \"" + m_desc + "\", is_done = \"" + (m_is_done ? "true" : "false") + "\""};
     definition += ", childs = {";
     for (unsigned int i{0}; i < m_childs.size(); i++){
           definition += m_childs[i]->getDefinition();
     }
     definition += "};";
-    replaceWord(m_desc, "_", " ");
-    replaceWord(m_desc, "/", "\n");
+    replaceWord(m_desc, "\\e", " ");
+    replaceWord(m_desc, "\\n", "\n");
     return definition;
 }
 
