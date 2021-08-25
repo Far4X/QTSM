@@ -137,7 +137,9 @@ AxisData::AxisData(){
 }
 
 AxisData::~AxisData(){
-
+    for (auto& child : m_childs){
+        delete child;
+    }
 }
 
 void AxisData::rename(std::string new_name){
@@ -146,6 +148,17 @@ void AxisData::rename(std::string new_name){
 
 void AxisData::appendChild(AxisData *new_child){
     m_childs.push_back(new_child);
+}
+
+void AxisData::deleteChild(std::string name){
+    for(unsigned int i{0}; i < m_childs.size(); i++){
+        if (m_childs[i]->getName() == name){
+            AxisData *axis_to_delete = m_childs[i];
+            m_childs.erase(m_childs.begin() + i);
+            delete axis_to_delete;
+        }
+    }
+
 }
 
 AxisData *AxisData::getParent(){

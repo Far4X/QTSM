@@ -17,7 +17,7 @@ public:
     void setIsDone(bool is_done);
     void rename(std::string new_name);
     void appendChild(AxisData* new_child);
-    void deleteChild();
+    void deleteChild(std::string name);
     std::vector<AxisData*>* getChilds();
     std::string getDefinition();
     std::string getDescription();

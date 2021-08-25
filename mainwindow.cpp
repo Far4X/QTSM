@@ -3,6 +3,7 @@
 #include "SubClasses/rootaxisdata.h"
 #include <string>
 #include <QInputDialog>
+#include <QMessageBox>
 #include <iostream>
 
 //ToDo : If the Axis doesn't have child, modify the gui (replace 'percent of sub axes' done by 'is the axis done ?', with a checkbutton istead of the %bar(And modify the spacer))
@@ -44,6 +45,7 @@ MainWindow::MainWindow(std::string path_of_the_project, QWidget *parent) :
     QObject::connect(ui->pushButtonChangeToChild, SIGNAL(clicked()), this, SLOT(changeAxisWithButton()));
     QObject::connect(ui->pushButtonReturnToMaster, SIGNAL(clicked()), this, SLOT(changeAxisToMaster()));
     QObject::connect(ui->pushButtonAddNewAxis, SIGNAL(clicked()), this, SLOT(createNewChild()));
+    QObject::connect(ui->pushButtonDeleteAxis, SIGNAL(clicked()), this, SLOT(removeCurrentAxis()));
     QObject::connect(ui->checkBoxIsDone, SIGNAL(clicked(bool)), this, SLOT(checkBoxClicked(bool)));
 }
 
@@ -81,6 +83,12 @@ void MainWindow::updateView(){
         this->resize(622, 318);
         ui->progressBar->setValue(m_current_axis->getPercentDone());
     }
+    if (m_current_axis == m_root_axis){
+        ui->pushButtonReturnToMaster->hide();
+    }
+    else {
+        ui->pushButtonReturnToMaster->show();
+    }
 
 }
 
@@ -108,7 +116,26 @@ void MainWindow::checkBoxClicked(bool state){
 void MainWindow::createNewChild(){
     std::string name = QInputDialog::getText(this, tr("Choose a name for the new axis"), tr("Choose a name for the axis : ")).toStdString();
     std::string desc = QInputDialog::getMultiLineText(this, tr("Choose a description for the new axis"), tr("Choose a descrption for the axis : ")).toStdString();
-    m_current_axis = new AxisData(name, desc, m_current_axis);
-    this->updateView();
+    if ((name != "") && (desc != "")){
+        m_current_axis = new AxisData(name, desc, m_current_axis);
+        this->updateView();
+        std::string message {"The axis \"" + name + "\" was created"};
+        QMessageBox::information(this, tr("Operation completed successfully"), QString::fromStdString(message));
 
+    }
+    else {
+        QMessageBox::warning(this, tr("Operation failed"), tr("The axis wasn't created because the name or the description is empty"));
+    }
+
+}
+
+void MainWindow::removeCurrentAxis(){
+    std::string message{"Are you sure that you want to delete " + m_current_axis->getName()};
+    int answer {QMessageBox::question(this, tr("Delete axis ?"), QString::fromStdString(message))};
+    if (answer == QMessageBox::Yes){
+        AxisData *next_current_axis = m_current_axis->getParent();
+        next_current_axis->deleteChild(m_current_axis->getName());
+        m_current_axis = next_current_axis;
+    }
+    this->updateView();
 }
