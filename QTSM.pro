@@ -31,7 +31,8 @@ SOURCES += \
     commonfunctions.cpp \
     SubClasses/modifyoptionsproject.cpp \
     SubClasses/axisdata.cpp \
-    SubClasses/rootaxisdata.cpp
+    SubClasses/rootaxisdata.cpp \
+    SubClasses/axisdatacontentprinter.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -39,7 +40,8 @@ HEADERS += \
     commonfunctions.h \
     SubClasses/modifyoptionsproject.h \
     SubClasses/axisdata.h \
-    SubClasses/rootaxisdata.h
+    SubClasses/rootaxisdata.h \
+    SubClasses/axisdatacontentprinter.h
 
 FORMS += \
         mainwindow.ui \
