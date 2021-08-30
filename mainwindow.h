@@ -25,6 +25,7 @@ public slots :
     void changeAxisToMaster();
     void checkBoxClicked(bool state);
     void createNewChild();
+    void showParamsCurrentAxis();
     void removeCurrentAxis();
 
 private:

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "SubClasses/axisdatacontentprinter.h"
 #include "SubClasses/rootaxisdata.h"
 #include <string>
 #include <QInputDialog>
@@ -15,6 +16,8 @@ MainWindow::MainWindow(std::string path_of_the_project, QWidget *parent) :
     ui->setupUi(this);
     m_path_of_the_project = path_of_the_project;
 
+    this->setWindowTitle(tr("Main window of QTSM"));
+
     m_root_axis = new RootAxisData(m_path_of_the_project);
     m_current_axis = m_root_axis;
     m_current_path_in_axes = m_root_axis->getPathAxes();
@@ -29,7 +32,7 @@ MainWindow::MainWindow(std::string path_of_the_project, QWidget *parent) :
 
     ui->centralWidget->setLayout(ui->mainLayout);
 
-    ui->labelDescriptionOfTheAxis->setWordWrap(true);
+    //ui->textBrowserDescription->setWordWrap(true);
     ui->progressBar->setRange(0, 100);
 
     ui->labelHeaderDescription->setText(QString::fromStdString("Description of the current axis : "));
@@ -42,11 +45,13 @@ MainWindow::MainWindow(std::string path_of_the_project, QWidget *parent) :
 
     this->updateView();
 
+    ;
     QObject::connect(ui->pushButtonChangeToChild, SIGNAL(clicked()), this, SLOT(changeAxisWithButton()));
     QObject::connect(ui->pushButtonReturnToMaster, SIGNAL(clicked()), this, SLOT(changeAxisToMaster()));
     QObject::connect(ui->pushButtonAddNewAxis, SIGNAL(clicked()), this, SLOT(createNewChild()));
     QObject::connect(ui->pushButtonDeleteAxis, SIGNAL(clicked()), this, SLOT(removeCurrentAxis()));
     QObject::connect(ui->checkBoxIsDone, SIGNAL(clicked(bool)), this, SLOT(checkBoxClicked(bool)));
+    QObject::connect(ui->pushButtonShowContent, SIGNAL(clicked()), this, SLOT(showParamsCurrentAxis()));
 }
 
 MainWindow::~MainWindow()
@@ -56,7 +61,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::updateView(){
-    ui->labelDescriptionOfTheAxis->setText(QString::fromStdString(m_current_axis->getDescription()));
+    ui->textBrowserDescription->setText(QString::fromStdString(m_current_axis->getDescription()));
     ui->labelShowPathAxis->setText(QString::fromStdString("Current path of axes : " + m_current_axis->getPathAxes()));
     if (m_current_axis->getChilds()->size() == 0){
         for (unsigned int i{0}; i < m_widgets_when_child.size(); i++)
@@ -138,4 +143,10 @@ void MainWindow::removeCurrentAxis(){
         m_current_axis = next_current_axis;
     }
     this->updateView();
+}
+
+void MainWindow::showParamsCurrentAxis(){
+    AxisDataContentPrinter *printer{};
+    printer = new AxisDataContentPrinter(m_current_axis);
+    printer->show();
 }

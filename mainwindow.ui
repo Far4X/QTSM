@@ -26,7 +26,7 @@
       <x>0</x>
       <y>0</y>
       <width>621</width>
-      <height>294</height>
+      <height>338</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="mainLayout">
@@ -87,17 +87,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="labelDescriptionOfTheAxis">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>TextDescription</string>
-         </property>
-        </widget>
+        <widget class="QTextBrowser" name="textBrowserDescription"/>
        </item>
       </layout>
      </item>

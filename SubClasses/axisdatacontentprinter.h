@@ -2,16 +2,23 @@
 #define AXISDATACONTENTPRINTER_H
 
 #include <QWidget>
+#include "axisdata.h"
+
+namespace Ui {
+class AxisDataContentPrinter;
+}
 
 class AxisDataContentPrinter : public QWidget
 {
     Q_OBJECT
+
 public:
-    explicit AxisDataContentPrinter(QWidget *parent = nullptr);
+    explicit AxisDataContentPrinter(AxisData *content_to_print, QWidget *parent = nullptr);
+    ~AxisDataContentPrinter();
 
-signals:
-
-public slots:
+private:
+    Ui::AxisDataContentPrinter *ui;
+    AxisData *m_content_to_print;
 };
 
 #endif // AXISDATACONTENTPRINTER_H

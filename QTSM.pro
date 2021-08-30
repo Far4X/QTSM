@@ -46,7 +46,8 @@ HEADERS += \
 FORMS += \
         mainwindow.ui \
     chooseaproject.ui \
-    SubClasses/modifyoptionsproject.ui
+    SubClasses/modifyoptionsproject.ui \
+    SubClasses/axisdatacontentprinter.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
