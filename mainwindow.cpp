@@ -27,12 +27,8 @@ MainWindow::MainWindow(std::string path_of_the_project, QWidget *parent) :
         std::cout << "Child nb " << i << ". Name : " << m_root_axis->getChilds()->operator[](i)->getName() << std::endl;
     }
 
-    m_root_axis->rename("WorkingTest");
-    m_root_axis->saveTree(m_path_of_the_project);
-
     ui->centralWidget->setLayout(ui->mainLayout);
 
-    //ui->textBrowserDescription->setWordWrap(true);
     ui->progressBar->setRange(0, 100);
 
     ui->labelHeaderDescription->setText(QString::fromStdString("Description of the current axis : "));
@@ -121,11 +117,15 @@ void MainWindow::checkBoxClicked(bool state){
 void MainWindow::createNewChild(){
     std::string name = QInputDialog::getText(this, tr("Choose a name for the new axis"), tr("Choose a name for the axis : ")).toStdString();
     std::string desc = QInputDialog::getMultiLineText(this, tr("Choose a description for the new axis"), tr("Choose a descrption for the axis : ")).toStdString();
-    if ((name != "") && (desc != "")){
+    if ((name != "") && (desc != "") && !m_current_axis->haveAChildNamed(name)){
         m_current_axis = new AxisData(name, desc, m_current_axis);
         this->updateView();
         std::string message {"The axis \"" + name + "\" was created"};
         QMessageBox::information(this, tr("Operation completed successfully"), QString::fromStdString(message));
+
+    }
+    else if (m_current_axis->haveAChildNamed(name)) {
+        QMessageBox::warning(this, tr("Operation failed"), QString::fromStdString("This axis have already a sub-axis named " + name));
 
     }
     else {

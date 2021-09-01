@@ -45,3 +45,7 @@ void RootAxisData::saveTree(std::string &path){
     else
         throw "Impossible to open " + path;
 }
+
+void RootAxisData::rename(std::string &new_name){
+    m_name = new_name;
+}

@@ -9,6 +9,7 @@ public:
     RootAxisData(std::string &path);
     virtual ~RootAxisData();
     void saveTree(std::string &path);
+    virtual void rename(std::string &new_name);
     virtual AxisData *getParent();
     virtual std::string getPathAxes();
     virtual std::string getTree();

@@ -16,6 +16,11 @@ public:
     explicit AxisDataContentPrinter(AxisData *content_to_print, QWidget *parent = nullptr);
     ~AxisDataContentPrinter();
 
+public slots :
+    void renameAxisData();
+    void redescribeAxisData();
+
+
 private:
     Ui::AxisDataContentPrinter *ui;
     AxisData *m_content_to_print;

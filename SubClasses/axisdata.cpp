@@ -122,7 +122,7 @@ AxisData::AxisData(std::string def_of_this, AxisData *master){
         master->appendChild(this);
 }
 
-AxisData::AxisData(std::string name, std::string desc, AxisData *parent){
+AxisData::AxisData(std::string name, std::string &desc, AxisData *parent){
     m_name = name;
     m_desc = desc;
     m_parent = parent;
@@ -142,8 +142,11 @@ AxisData::~AxisData(){
     }
 }
 
-void AxisData::rename(std::string new_name){
-    m_name = new_name;
+void AxisData::rename(std::string &new_name){
+    if (!(m_parent->haveAChildNamed(new_name)))
+        m_name = new_name;
+    else
+        throw "There is already a child named " + new_name;
 }
 
 void AxisData::appendChild(AxisData *new_child){
@@ -159,6 +162,18 @@ void AxisData::deleteChild(std::string name){
         }
     }
 
+}
+
+void AxisData::setDescription(std::string& new_desc){
+    m_desc = new_desc;
+}
+
+bool AxisData::haveAChildNamed(std::string name_to_check){
+    for (auto &child : m_childs){
+        if (child->getName() == name_to_check)
+            return true;
+    }
+    return false;
 }
 
 AxisData *AxisData::getParent(){
