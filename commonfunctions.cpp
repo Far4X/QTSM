@@ -136,6 +136,7 @@ void rewriteFile(const std::map<std::string, std::string> &dict){
     fileFlux << '\n' <<"Writing completed" << std::endl;
 }
 
+//A function that change chars and list of chars
 
 void replaceWord(std::string &original, const std::string &to_find, const std::string &to_replace){
     unsigned int i = unsigned(int(original.find(to_find)));
