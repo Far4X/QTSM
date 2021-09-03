@@ -8,6 +8,8 @@ AxisData::AxisData(std::string def_of_this, AxisData *master){
     int nb_of_braces = 0;
     m_parent = master;
 
+    std::cout << def_of_this << std::endl;
+
     std::string current_param, value_of_current_param;
     bool equal_passed = false, can_be_ended = true;
     for (unsigned int i = 0; i < unsigned(int(def_of_this.size())); i++){

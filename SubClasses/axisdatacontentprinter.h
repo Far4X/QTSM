@@ -2,13 +2,14 @@
 #define AXISDATACONTENTPRINTER_H
 
 #include <QWidget>
+#include <QDialog>
 #include "axisdata.h"
 
 namespace Ui {
 class AxisDataContentPrinter;
 }
 
-class AxisDataContentPrinter : public QWidget
+class AxisDataContentPrinter : public QDialog
 {
     Q_OBJECT
 

@@ -6,7 +6,7 @@
 #include <iostream>
 
 AxisDataContentPrinter::AxisDataContentPrinter(AxisData *content_to_print, QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::AxisDataContentPrinter)
 {
     ui->setupUi(this);
@@ -24,6 +24,7 @@ AxisDataContentPrinter::AxisDataContentPrinter(AxisData *content_to_print, QWidg
 AxisDataContentPrinter::~AxisDataContentPrinter()
 {
     delete ui;
+
 }
 
 void AxisDataContentPrinter::renameAxisData(){

@@ -90,10 +90,28 @@ void ChooseAProject::modifyThisProject(){
 
 void ChooseAProject::createNewProject(){
     std::string project_name = QInputDialog::getText(this, tr("Choose a name for your project"), tr("Name for your project : ")).toStdString();
-    std::string project_path = QFileDialog::getSaveFileName(this, "Choose a file for your project", getHomeDir(), "qtsm files (*.qtsm)").toStdString();
+    std::string project_desc = QInputDialog::getMultiLineText(this, tr("Choose a descrpition for your project"), tr("Description for this project : ")).toStdString();
+    std::string dir{getHomeDir()};
+    dir += "/" + project_name + ".qtsm";
+    std::string project_path = QFileDialog::getSaveFileName(this, "Choose a file for your project", QString::fromStdString(dir), "qtsm files (*.qtsm)", nullptr).toStdString();
     if (project_name != "" && project_path != ""){
         system(("touch " + project_path).c_str());
         m_dict_projects[project_name] = project_path;
+
+        replaceWord(project_desc, " ", "\\e");
+        replaceWord(project_desc, "\n", "\\n");
+
+        std::ofstream file_flux(project_path);
+        if (file_flux){
+                file_flux << "type = \"RootAxisData\", name = \"" + project_name +"\", desc = \"" + project_desc + "\", is_done = \"false\", childs = {};\n";
+                file_flux.flush();
+                file_flux << "WRITING COMPLETE";
+                file_flux.flush();
+        }
+        else {
+            std::cout << "Pas ok" << std::endl;
+        }
+
         ui->comboBoxChooseAProject->addItem(QString::fromStdString(project_name));
         rewriteFile(m_dict_projects);
     }

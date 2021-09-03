@@ -36,6 +36,7 @@ MainWindow::MainWindow(std::string path_of_the_project, QWidget *parent) :
     m_widgets_when_child.push_back(ui->comboBox);
     m_widgets_when_child.push_back(ui->progressBar);
     m_widgets_when_child.push_back(ui->pushButtonChangeToChild);
+    m_widgets_when_child.push_back(ui->line_3);
     m_widgets_when_no_child.push_back(ui->checkBoxIsDone);
     m_widgets_when_no_child.push_back(ui->labelDNTListChild);
 
@@ -147,6 +148,8 @@ void MainWindow::removeCurrentAxis(){
 
 void MainWindow::showParamsCurrentAxis(){
     AxisDataContentPrinter *printer{};
-    printer = new AxisDataContentPrinter(m_current_axis);
-    printer->show();
+    printer = new AxisDataContentPrinter(m_current_axis, this);
+    printer->exec();
+    std::cout << "OK" << std::endl;
+    this->updateView();
 }
